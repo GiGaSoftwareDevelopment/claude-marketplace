@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/claude-marketplace.json",
+  "name": "claude-marketplace",
+  "owner": "GiGaSoftwareDevelopment",
+  "description": "GigaSoftware's plugin marketplace for Claude Cowork and Claude Code.",
+  "plugins": [
+    {
+      "name": "scribe",
+      "source": "./scribe",
+      "description": "Capture Claude Cowork or Claude Code sessions — summaries, attached images, audio, video, and PDFs — into a git-versioned notes repo. Supports multiple repos with per-user namespaces; works for solo journaling and shared collaborative notes."
+    }
+  ]
+}
