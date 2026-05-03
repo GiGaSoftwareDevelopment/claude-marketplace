@@ -100,7 +100,7 @@ Call `mcp__scribe__save_session` once with everything:
   "slug": "offer-accepted",
   "frontmatter": {
     "date": "2026-05-02",
-    "participants": ["Larry", "Jane Doe"],
+    "participants": ["<you>", "Jane Doe"],
     "transaction": "123 Main St",
     "tags": ["buyer", "offer"]
   },

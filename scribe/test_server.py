@@ -137,8 +137,8 @@ class HelperTests(unittest.TestCase):
         self.assertEqual(self.server._slugify("!!!"), "note")
 
     def test_slugify_user_name(self):
-        self.assertEqual(self.server._slugify_user_name("Larry Simms"), "larrysimms")
-        self.assertEqual(self.server._slugify_user_name("Jerry Orta"), "jerryorta")
+        self.assertEqual(self.server._slugify_user_name("Alex Smith"), "alexsmith")
+        self.assertEqual(self.server._slugify_user_name("Morgan Garcia"), "morgangarcia")
 
     def test_yaml_value_list(self):
         self.assertEqual(self.server._yaml_value([1, 2, "a b"]), "[1, 2, a b]")
@@ -159,9 +159,9 @@ class ConfigManagementTests(unittest.TestCase):
         self.tmp = Path(tempfile.mkdtemp(prefix="scribe-cfg-"))
         self.config_dir = self.tmp / "config"
         self.repo1 = self.tmp / "repo1"
-        _git_init(self.repo1, user_name="Larry Simms")
+        _git_init(self.repo1, user_name="Alex Smith")
         self.repo2 = self.tmp / "repo2"
-        _git_init(self.repo2, user_name="Larry Simms")
+        _git_init(self.repo2, user_name="Alex Smith")
         self.server = _load_server(self.config_dir)
 
     def tearDown(self):
@@ -177,7 +177,7 @@ class ConfigManagementTests(unittest.TestCase):
     def test_add_first_repo_sets_it_as_current(self):
         result = self.server.add_repo(name="ground-zero", path=str(self.repo1))
         self.assertEqual(result["added"], "ground-zero")
-        self.assertEqual(result["user"], "larrysimms")  # derived from git config
+        self.assertEqual(result["user"], "alexsmith")  # derived from git config
         self.assertEqual(result["current"], "ground-zero")
 
     def test_add_second_repo_does_not_change_current(self):
@@ -233,9 +233,9 @@ class SaveSessionTests(unittest.TestCase):
         self.tmp = Path(tempfile.mkdtemp(prefix="scribe-save-"))
         self.config_dir = self.tmp / "config"
         self.repo1 = self.tmp / "repo1"
-        _git_init(self.repo1, with_origin=True, user_name="Larry Simms")
+        _git_init(self.repo1, with_origin=True, user_name="Alex Smith")
         self.repo2 = self.tmp / "repo2"
-        _git_init(self.repo2, with_origin=True, user_name="Larry Simms")
+        _git_init(self.repo2, with_origin=True, user_name="Alex Smith")
         self.server = _load_server(self.config_dir)
         self.server.add_repo(name="primary", path=str(self.repo1))
         _patch_git(self.server, push_fails="no remote configured")
@@ -257,7 +257,7 @@ class SaveSessionTests(unittest.TestCase):
             slug="Offer Accepted!",
             frontmatter={
                 "date": "2026-05-02",
-                "participants": ["Larry", "Jane Doe"],
+                "participants": ["Alex", "Jane Doe"],
                 "transaction": "123 Main St",
                 "tags": ["buyer", "offer"],
             },
@@ -265,10 +265,10 @@ class SaveSessionTests(unittest.TestCase):
             media=[{"source_path": str(media), "descriptor": "Inspection Photo"}],
         )
         self.assertEqual(result["repo"], "primary")
-        self.assertEqual(result["note_path"], "larrysimms/clients/jane-doe/2026-05-02-offer-accepted.md")
+        self.assertEqual(result["note_path"], "alexsmith/clients/jane-doe/2026-05-02-offer-accepted.md")
         self.assertEqual(
             result["media_paths"],
-            ["larrysimms/clients/jane-doe/media/2026-05-02-offer-accepted-inspection-photo.jpg"],
+            ["alexsmith/clients/jane-doe/media/2026-05-02-offer-accepted-inspection-photo.jpg"],
         )
         self.assertTrue(result["git"]["pulled"])
         self.assertTrue(result["git"]["committed"])
@@ -276,7 +276,7 @@ class SaveSessionTests(unittest.TestCase):
 
         note = (self.repo1 / result["note_path"]).read_text()
         self.assertIn("date: 2026-05-02", note)
-        self.assertIn("participants: [Larry, Jane Doe]", note)
+        self.assertIn("participants: [Alex, Jane Doe]", note)
         self.assertIn("media: [media/2026-05-02-offer-accepted-inspection-photo.jpg]", note)
         # Note: no `type` field anymore — that was real-estate-specific.
         self.assertNotIn("type:", note)
@@ -435,13 +435,13 @@ class RepoInfoTests(unittest.TestCase):
         try:
             config_dir = tmp / "config"
             repo = tmp / "repo"
-            _git_init(repo, user_name="Jerry Orta")
+            _git_init(repo, user_name="Morgan Garcia")
             server = _load_server(config_dir)
             server.add_repo(name="primary", path=str(repo))
             info = server.repo_info()
             self.assertEqual(info["repo"], "primary")
             self.assertEqual(info["path"], str(repo))
-            self.assertEqual(info["user"], "jerryorta")
+            self.assertEqual(info["user"], "morgangarcia")
             self.assertEqual(info["branch"], "main")
             self.assertFalse(info["user_root_exists"])
         finally:
@@ -453,7 +453,7 @@ class VerifyCredentialsTests(unittest.TestCase):
         self.tmp = Path(tempfile.mkdtemp(prefix="scribe-verify-"))
         self.config_dir = self.tmp / "config"
         self.repo = self.tmp / "repo"
-        _git_init(self.repo, with_origin=True, user_name="Larry Simms")
+        _git_init(self.repo, with_origin=True, user_name="Alex Smith")
         self.server = _load_server(self.config_dir)
         self.server.add_repo(name="primary", path=str(self.repo))
 

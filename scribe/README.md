@@ -6,6 +6,8 @@ Designed for shared collaborative notes repos: each user gets their own per-stak
 
 ## Install
 
+> **First-time setup?** If your Mac doesn't have developer tools, GitHub access, or a local clone of the notes repo yet, follow [`../SETUP.md`](../SETUP.md) — a step-by-step walkthrough for non-developers. The instructions below assume those prereqs are done.
+
 In a Cowork or Claude Code session:
 
 ```
@@ -13,7 +15,7 @@ In a Cowork or Claude Code session:
 /plugin install scribe@claude-marketplace
 ```
 
-Restart your Claude session so the plugin's tools and skill load. The first time the plugin's MCP runs, it sets up its own Python venv (`mcp` package, ~10 seconds, one-time, requires `python3` on PATH).
+Fully quit and relaunch your Claude client so the plugin's tools and skill load. The first time scribe's MCP runs, it sets up its own local Python venv (about 10 seconds, one-time, requires `python3` on PATH).
 
 ## First-time configuration
 
@@ -21,7 +23,13 @@ Scribe doesn't know where to write your notes until you tell it. From a Claude s
 
 > Configure scribe to save notes to my repo at /Users/me/Dev/team-notes.
 
-Claude will use the `add_repo` tool to register the repo. It will derive your user slug from `git config user.name` (override-able) and use the directory's basename as the short repo identifier (override-able). The first repo you add becomes the active default.
+Claude will use the `add_repo` tool to register the repo. It derives your user slug from `git config user.name` (override-able) and uses the directory's basename as the short repo identifier (override-able). The first repo you add becomes the active default.
+
+If anything looks off, ask:
+
+> Verify my scribe install.
+
+Claude runs `verify_credentials` and reports the status of each check — git identity, push permission, Python runtime, etc. — with remediation hints for anything that's not green.
 
 ## Usage
 
@@ -67,11 +75,11 @@ Claude will run `verify_credentials`, which checks: git identity, origin reachab
 
 ## How notes are laid out
 
-For a user `larrysimms` with a repo at `/Users/me/Dev/team-notes`, after a few `/session-summary` invocations the layout looks like:
+For a user `alexsmith` with a repo at `/Users/me/Dev/team-notes`, after a few `/session-summary` invocations the layout looks like:
 
 ```
 team-notes/
-├── larrysimms/
+├── alexsmith/
 │   ├── INDEX.md                              # running, reverse-chronological index
 │   ├── communications/
 │   │   └── 2026-05-02-rollup.md             # one-line per save, that day's chronological log
@@ -82,7 +90,7 @@ team-notes/
 │   │           └── 2026-05-02-offer-accepted-inspection.jpg
 │   ├── workflows/
 │   └── shared/                               # cross-cutting, optionally
-└── jerryorta/                                # another user's namespace
+└── morgangarcia/                             # another user's namespace
     └── ...
 ```
 
@@ -120,7 +128,7 @@ Scribe stores per-machine config at `~/.config/scribe/config.json` (or `$XDG_CON
   "repos": {
     "team-notes": {
       "path": "/Users/me/Dev/team-notes",
-      "user": "larrysimms",
+      "user": "alexsmith",
       "added_at": "2026-05-02T..."
     }
   }
