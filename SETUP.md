@@ -2,17 +2,17 @@
 
 A walkthrough for first-time users — no developer experience assumed. You'll spend a few minutes in your computer's command-line app (Terminal on Mac, PowerShell on Windows), then everything else happens inside Claude.
 
-If you've already set up your machine for developer work — git, GitHub access, an SSH key — skip to [Step 6](#step-6-install-claude-code).
+If you've already done a developer setup before — git, GitHub access, an SSH key — skim Steps 1–4 and pick up at [Step 5 (Clone the notes repo)](#step-5--download-the-notes-repo).
 
 ## What you'll be doing, big picture
 
 1. Make sure your computer has the small set of developer tools needed.
 2. Tell your computer who you are (so changes you save are signed with your name).
 3. Set up a security key so GitHub can recognize your computer.
-4. Install **Claude Code** — the official command-line tool from Anthropic that runs the plugins from this marketplace.
-5. Download a copy of the notes repo someone has invited you to.
-6. Install the plugin inside Claude Code.
-7. Tell the plugin where your local copy of the notes repo lives.
+4. Download a copy of the notes repo someone has invited you to.
+5. Install the plugin inside your Claude client (Cowork or Claude Code).
+6. Tell the plugin where your local copy of the notes repo lives.
+7. Try saving a session.
 
 It's mostly copy-paste-and-press-Return. The whole thing takes about 20 minutes the first time, less if you already have a developer setup.
 
@@ -25,13 +25,16 @@ You need:
 - A Mac (macOS) or Windows PC.
 - A **GitHub account**. Sign up at [github.com](https://github.com) if you don't have one.
 - An **invite to a notes repo** — the person who's setting you up will add you as a GitHub collaborator. Check your email for a GitHub invite and accept it before continuing.
-- A **Claude plan** that includes Claude Code: Pro, Max, Team, Enterprise, or Console. The free Claude.ai plan does not include Claude Code access.
+- A **Claude plan**: Pro, Max, Team, Enterprise, or Console. The free Claude.ai plan does not support plugins.
+- A **Claude client installed** — either:
+  - **Claude Cowork** (recommended for non-developers) — download from [claude.ai/download](https://claude.ai/download).
+  - **Claude Code** (for engineers comfortable with a terminal CLI) — install instructions in [Step 6 → For Claude Code users](#step-6b--for-claude-code-users).
 
 ---
 
 ## Step 1 — Open your shell
 
-This is where you'll paste the commands in the next steps.
+This is where you'll paste the commands in Steps 2–5.
 
 **Mac:** Press **Cmd+Space**, type **Terminal**, press **Return**. A window with a blinking cursor appears.
 
@@ -67,7 +70,7 @@ You should see a version number. If it says "command not found," re-run the inst
 
 Download and install **Git for Windows** from [git-scm.com/download/win](https://git-scm.com/download/win). Accept the default options when the installer prompts you.
 
-Git for Windows gives you `git`, `ssh-keygen`, and a Bash-like shell (Git Bash) that some Claude Code commands use as a fallback. Without it, Claude Code falls back to PowerShell, which works for most things but not all.
+Git for Windows gives you `git`, `ssh-keygen`, and a Bash-like shell.
 
 After install, **close and reopen** PowerShell, then verify:
 
@@ -162,47 +165,9 @@ If you instead see *"Permission denied (publickey)"*, the key didn't get added c
 
 ---
 
-## Step 5 — Install Claude Code
+## Step 5 — Download the notes repo
 
-### macOS
-
-Recommended (native installer, stable release):
-
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-Or via Homebrew if you prefer:
-
-```bash
-brew install claude-code
-```
-
-### Windows
-
-In PowerShell:
-
-```powershell
-irm https://claude.ai/install.ps1 | iex
-```
-
-### Verify (Mac and Windows)
-
-Close and reopen your shell, then run:
-
-```
-claude doctor
-```
-
-This is Claude Code's self-check — it should print all green. If anything's red, follow the suggestion it prints.
-
-The first time you run `claude` (without any arguments), it will open your browser to log in. Follow the prompts to authenticate with the same account that has your Pro/Max/Team/Enterprise/Console plan.
-
----
-
-## Step 6 — Download the notes repo
-
-The person who set you up will tell you the repo address — it looks like `git@github.com:<owner>/<reponame>.git`. Pick where you want it on your computer (a `Dev` folder in your home directory is a common choice):
+The person who set you up will tell you the repo address — it looks like `git@github.com:<owner>/<reponame>.git`. We recommend cloning into a `Dev` folder in your home directory:
 
 **Mac (Terminal):**
 
@@ -219,53 +184,149 @@ cd ~/Dev
 git clone git@github.com:<owner>/<reponame>.git
 ```
 
-You'll now have a folder at `~/Dev/<reponame>`. **Remember this path** — you'll give it to Claude in Step 8.
+You'll now have a folder at `~/Dev/<reponame>`. **Remember this path** — you'll give it to Claude in Step 7.
 
 If you get a permission error, you probably haven't accepted the GitHub collaborator invite yet (check your email).
 
 ---
 
-## Step 7 — Install the plugin
+## Step 6 — Install the plugin
 
-In your shell, run `claude` to start a Claude Code session. You're now inside Claude Code (you'll see a prompt).
+Pick the section for whichever Claude client you're using.
 
-Send these slash commands, one at a time:
+### Step 6a — For Cowork users (recommended for non-developers)
+
+#### Download the plugin
+
+Click this link to download `scribe-v0.1.1.zip` directly:
+
+**[Download scribe v0.1.1](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/releases/download/v0.1.1/scribe-v0.1.1.zip)**
+
+It saves to your Downloads folder.
+
+To browse all versions or grab an older one, see [all releases](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/releases).
+
+#### Open Cowork's plugin manager
+
+In the Cowork app, find the **Customize** panel — usually accessed from a sidebar or menu in the chat view.
+
+![Select the Customize entry](docs/cowork-install/1-select-customize.png)
+
+#### Add a personal plugin
+
+In Customize, click the **+** next to **Personal plugins** to open the add-plugin menu.
+
+![Click + next to Personal plugins](docs/cowork-install/2-click-plus-to-add-personal-plugin.png)
+
+#### Choose "Upload plugin"
+
+From the menu, choose **Upload plugin** (the option for installing a custom plugin from a file).
+
+![Select Upload plugin](docs/cowork-install/3-select-upload-plugin.png)
+
+#### Browse for the zip
+
+In the dialog that appears, click **Browse files** to open the file picker.
+
+![Click Browse files](docs/cowork-install/4-select-browse-files.png)
+
+You can also drag the zip from Finder / Explorer directly into the dialog's drop zone — same result.
+
+![Drag the plugin into the modal](docs/cowork-install/5-drag-plugin-to-modal.png)
+
+Pick the `scribe-vX.Y.Z.zip` you downloaded a minute ago.
+
+#### Confirm MCP server registration
+
+Cowork will ask you to confirm registering the plugin's MCP server. Click **Continue**.
+
+![Click Continue for MCP servers](docs/cowork-install/6-click-continue-for-mcp-servers.png)
+
+The MCP server is what lets the plugin write notes to your repo and run git on your behalf — it's required for scribe to do anything useful. It runs as you, on your computer.
+
+#### Confirm the install
+
+You should now see scribe under **Personal plugins** with version, source, and the **Skills** tab populated with `/session-summary`.
+
+![Scribe installed and ready](docs/cowork-install/7-install-result.png)
+
+#### Restart Cowork
+
+**Quit Cowork completely** (Cmd+Q on Mac, or Cowork → Quit Cowork in the menu bar) and reopen it. This is required so Cowork loads the new MCP server into a fresh session.
+
+Now skip to [Step 7 — Configure scribe](#step-7--configure-scribe).
+
+### Step 6b — For Claude Code users
+
+If you don't already have Claude Code installed, install it now.
+
+#### Install Claude Code
+
+**macOS** (in Terminal):
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Or via Homebrew:
+
+```bash
+brew install claude-code
+```
+
+**Windows** (in PowerShell):
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+Verify:
+
+```
+claude doctor
+```
+
+The first time you run `claude` (no arguments) it opens your browser to log in.
+
+#### Install scribe
+
+In Terminal, run `claude` to start a session. Send these slash commands one at a time:
 
 ```
 /plugin marketplace add GiGaSoftwareDevelopment/claude-marketplace
 ```
 
-Claude Code fetches the marketplace metadata. Then install whichever plugin you were told to install (most commonly `scribe`):
-
 ```
 /plugin install scribe@gigasoftware-marketplace
 ```
 
-Once it confirms the install, **exit Claude Code** (press Ctrl+C twice or type `/quit`) and start it again with `claude`. This is required so Claude Code loads the plugin's tools and skill into the new session.
+After both succeed, **exit Claude Code** (Ctrl+C twice or `/quit`) and start it again with `claude` so the plugin loads into a fresh session.
 
 ---
 
-## Step 8 — Configure the plugin
+## Step 7 — Configure scribe
 
-Start a fresh Claude Code session: `claude`. Then tell Claude (paste this, replacing the path with where you cloned the repo in Step 6):
+In a fresh chat (Cowork or Claude Code), tell Claude:
 
-> Configure scribe to save my notes to /Users/me/Dev/your-repo-name
+> Configure scribe to save my notes to ~/Dev/&lt;your-repo-name&gt;
 
-(On Windows, the path is `C:/Users/me/Dev/your-repo-name` or similar.)
+(Replace `<your-repo-name>` with whatever you cloned in Step 5.)
+
+The `~` part expands automatically to your home folder, so this command works on any Mac or Windows machine without typing your full path. If you cloned the repo somewhere else, give the full path instead.
 
 Claude will set things up and confirm. It figures out your user-folder name automatically from the git identity you set in Step 3.
 
-Then verify:
+Then verify everything works end-to-end:
 
 > Verify my scribe install.
 
-Claude runs a series of checks. Everything should come back green. If anything's red, the message tells you what to fix — most commonly it points back to one of the earlier steps in this guide.
+Claude runs a series of checks. Everything should come back green or with a single yellow `notes_user_dir_exists` warning (that one's expected — the folder is created on your first save). If anything's red, the message tells you what to fix — most commonly it points back to one of Steps 2, 3, or 4.
 
 ---
-```
-## Step 9 — Save your first session
 
-You're done with setup. Have a short conversation with Claude — talk through whatever's on your mind for the day. Then run:
+## Step 8 — Save your first session
+
+You're done with setup. Have a short conversation with Claude — talk through whatever's on your mind for the day. Then send:
 
 ```
 /session-summary
@@ -275,7 +336,7 @@ Or just say it conversationally:
 
 > Save this to scribe.
 
-Claude writes a markdown file into the repo, commits it, and pushes it to GitHub. You can verify by going to the repo on github.com — your new file will be there.
+Claude writes a markdown file into the repo, commits it, and pushes it to GitHub. You can verify by going to the repo on github.com — your new file will be there in your personal user-folder (e.g. `<your-username-slug>/communications/...`).
 
 ---
 
@@ -283,10 +344,10 @@ Claude writes a markdown file into the repo, commits it, and pushes it to GitHub
 
 - **A command says "command not found".** Re-run Step 2 (developer tools).
 - **GitHub says "Permission denied (publickey)".** Re-do Step 4 (SSH key).
-- **`claude doctor` reports red items.** Follow the specific suggestion it prints. Common fixes: restart your shell, log in to a paid plan, install Git for Windows.
-- **`/session-summary` doesn't seem to do anything.** You probably forgot to exit and restart Claude Code after installing the plugin (Step 7). Quit and restart, then try again.
-- **Claude says it can't find scribe or its tools.** Same as above — restart Claude Code.
+- **`/session-summary` doesn't seem to do anything.** You probably forgot to fully restart Cowork (or Claude Code) after installing the plugin in Step 6. Quit completely, reopen, try again.
+- **Cowork shows scribe but no skills under it.** You're on an outdated zip — download the latest release from Step 6a and re-upload, then quit and reopen.
 - **Claude says push failed.** You probably haven't accepted the GitHub collaborator invite yet, or your access is read-only. Check with the person who set you up.
+- **`claude doctor` reports red items** (Code path only). Follow the specific suggestion it prints. Common fixes: restart your shell, log in to a paid plan, install Git for Windows.
 - **Anything else.** Copy what's on your screen and send it to whoever's helping you. The actual error message is the fastest way to fix it.
 
 ---
@@ -298,9 +359,8 @@ Claude writes a markdown file into the repo, commits it, and pushes it to GitHub
 | Installed developer tools (Xcode CLT or Git for Windows) | Your computer has `git` and friends |
 | Set git identity | Notes get attributed to you |
 | Created and registered an SSH key | GitHub recognizes your computer |
-| Installed Claude Code | You have a Claude client that supports plugins |
 | Cloned the notes repo | You have a local copy on disk |
-| Installed the plugin in Claude Code | The plugin's commands are available in chat |
-| Pointed the plugin at your repo | Saves know where to write |
+| Installed scribe (via Cowork upload or Code marketplace) | The plugin's commands are available in chat |
+| Pointed scribe at your repo | Saves know where to write |
 
-Once this is done, the only thing you need day-to-day is starting Claude Code (`claude`), having a conversation, and running `/session-summary` (or saying "save this to scribe") at the end. Everything else is automatic.
+Once this is done, the only thing you need day-to-day is opening Cowork (or running `claude`), having a conversation, and saying *"save this to scribe"* (or running `/session-summary`) at the end. Everything else is automatic.
