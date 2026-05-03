@@ -8,6 +8,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/GiGaSoftwareDevelopment/claude-marketplace/tree/main/scribe",
+  "skills": "./skills/",
   "mcpServers": {
     "scribe": {
       "command": "${CLAUDE_PLUGIN_ROOT}/launcher.sh",
