@@ -238,7 +238,7 @@ Send these slash commands, one at a time:
 Claude Code fetches the marketplace metadata. Then install whichever plugin you were told to install (most commonly `scribe`):
 
 ```
-/plugin install scribe@claude-marketplace
+/plugin install scribe@gigasoftware-marketplace
 ```
 
 Once it confirms the install, **exit Claude Code** (press Ctrl+C twice or type `/quit`) and start it again with `claude`. This is required so Claude Code loads the plugin's tools and skill into the new session.

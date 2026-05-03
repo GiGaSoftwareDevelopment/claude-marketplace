@@ -17,7 +17,7 @@ Call `mcp__scribe__list_repos`. Three possible states:
 - **One or more repos configured, `current` is set** → ready. Go to step 3.
 - **Configured but `current` is `null` or invalid** → ask the user which repo to use, then `mcp__scribe__switch_repo`. Then go to step 3.
 
-If the call itself fails ("tool not found"), the scribe MCP isn't registered in this session — tell the user to install the plugin (`/plugin install scribe@claude-marketplace`) and restart their Claude session, then stop.
+If the call itself fails ("tool not found"), the scribe MCP isn't registered in this session — tell the user to install the plugin (`/plugin install scribe@gigasoftware-marketplace`) and restart their Claude session, then stop.
 
 ## 2. First-run flow (only if no repos are configured)
 

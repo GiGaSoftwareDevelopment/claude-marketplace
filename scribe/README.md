@@ -12,7 +12,7 @@ In a Cowork or Claude Code session:
 
 ```
 /plugin marketplace add GiGaSoftwareDevelopment/claude-marketplace
-/plugin install scribe@claude-marketplace
+/plugin install scribe@gigasoftware-marketplace
 ```
 
 Fully quit and relaunch your Claude client so the plugin's tools and skill load. The first time scribe's MCP runs, it sets up its own local Python venv (about 10 seconds, one-time, requires `python3` on PATH).

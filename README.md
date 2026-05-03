@@ -23,7 +23,7 @@ If you've installed Claude plugins before and your machine is already set up, th
 then install whichever plugin you want:
 
 ```
-/plugin install scribe@claude-marketplace
+/plugin install scribe@gigasoftware-marketplace
 ```
 
 After installing, **fully quit and relaunch your Claude client** so the plugin's tools and skill load. Updates land via `/plugin marketplace update` later.
