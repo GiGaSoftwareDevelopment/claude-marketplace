@@ -280,9 +280,9 @@ If you get a permission error, you probably haven't accepted the GitHub collabor
 
 ### Download the plugin
 
-Click this link to download `scribe-v0.1.2.zip`:
+Click this link to download `scribe-v0.1.3.zip`:
 
-**[Download scribe v0.1.2](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/releases/download/v0.1.2/scribe-v0.1.2.zip)**
+**[Download scribe v0.1.3](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/releases/download/v0.1.3/scribe-v0.1.3.zip)**
 
 Saves to your Downloads folder. To browse all versions, see [all releases](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/releases).
 
@@ -306,7 +306,7 @@ Pick **Upload plugin** from the menu.
 
 ### Select the zip
 
-Click **Browse files** and pick the `scribe-v0.1.2.zip` you downloaded.
+Click **Browse files** and pick the `scribe-v0.1.3.zip` you downloaded.
 
 ![Click Browse files](docs/cowork-install/4-select-browse-files.png)
 

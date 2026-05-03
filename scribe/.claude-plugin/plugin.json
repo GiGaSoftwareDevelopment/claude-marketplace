@@ -1,6 +1,6 @@
 {
   "name": "scribe",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Capture Claude sessions — summaries, attached images, audio, video, PDFs — into a git-versioned notes repo. Multi-repo, multi-user, works for solo journaling and shared collaborative notes.",
   "author": {
     "name": "GiGaSoftware Development",
