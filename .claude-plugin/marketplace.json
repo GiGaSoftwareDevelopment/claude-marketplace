@@ -1,8 +1,7 @@
 {
   "name": "gigasoftware-marketplace",
   "owner": {
-    "name": "GiGaSoftware Development",
-    "url": "https://github.com/GiGaSoftwareDevelopment"
+    "name": "GiGaSoftware Development"
   },
   "description": "GigaSoftware's plugin marketplace for Claude Code.",
   "plugins": [
