@@ -557,16 +557,9 @@ def verify_credentials(repo: str | None = None) -> dict:
     else:
         add("git_identity", "fail", f"name={name!r} email={email!r}")
 
-    if name:
-        expected_slug = _slugify_user_name(name)
-        if expected_slug == user:
-            add("notes_user_matches_identity", "ok", user)
-        else:
-            add(
-                "notes_user_matches_identity", "warn",
-                f"configured user is {user!r} but git user.name slugifies to {expected_slug!r}. "
-                "Either git user.name was changed after add_repo, or the slug was passed explicitly.",
-            )
+    # The notes-user slug is sticky — frozen at add_repo time. We deliberately
+    # don't compare it against current git config because users with multiple
+    # orgs / per-directory git configs would see a useless warn on every run.
 
     user_root = repo_root / user
     if user_root.exists():

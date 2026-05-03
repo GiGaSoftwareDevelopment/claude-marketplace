@@ -33,15 +33,19 @@ A release with target version `X.Y.Z` requires updating **all four** of these. M
 
 | # | File | Field | Example value |
 |---|---|---|---|
-| 1 | `scribe/.claude-plugin/plugin.json` | `"version"` | `"0.1.1"` |
-| 2 | `scribe/pyproject.toml` | `version` | `"0.1.1"` |
-| 3 | `SETUP.md` (download link text) | the version inside the markdown link text | `Download scribe v0.1.1` |
-| 4 | `SETUP.md` (download link URL) | the version appears **twice** in this URL — once as the tag, once in the filename | `releases/download/v0.1.1/scribe-v0.1.1.zip` |
+| 1 | `scribe/.claude-plugin/plugin.json` | `"version"` | `"0.1.2"` |
+| 2 | `scribe/pyproject.toml` | `version` | `"0.1.2"` |
+| 3 | `SETUP-END-USER.md` (download link text) | the version inside the markdown link text | `Download scribe v0.1.2` |
+| 4 | `SETUP-END-USER.md` (download link URL) | the version appears **twice** in this URL — once as the tag, once in the filename | `releases/download/v0.1.2/scribe-v0.1.2.zip` |
+
+`SETUP-DEV-TEAM.md` does **not** carry a version-pinned download link — engineers install via `/plugin marketplace add` + `/plugin install` slash commands, which resolve to the latest release automatically. No edit needed there.
+
+`README.md` and `SETUP.md` are version-agnostic routers; they don't reference specific versions either.
 
 Use grep to confirm before and after — search for the *previous* version, replace, then verify zero residual matches:
 
 ```
-grep -rEn "0\.1\.0|v0\.1\.0|scribe-v0\.1\.0\.zip" --include="*.md" --include="*.toml" --include="*.json" .
+grep -rEn "0\.1\.1|v0\.1\.1|scribe-v0\.1\.1\.zip" --include="*.md" --include="*.toml" --include="*.json" .
 ```
 
 Should return zero hits after the update (other than `RELEASE.md` itself if examples there reference the old version).
@@ -118,7 +122,7 @@ User runs from their Terminal:
 
 > ```bash
 > cd /Users/<user>/Dev/claude-marketplace
-> git add scribe/.claude-plugin/plugin.json scribe/pyproject.toml SETUP.md
+> git add scribe/.claude-plugin/plugin.json scribe/pyproject.toml SETUP-END-USER.md
 > git commit -m "scribe vX.Y.Z: <one-line summary of the release>"
 > git push
 >
@@ -144,7 +148,7 @@ User runs (substitute version + paste the release notes you drafted earlier):
 >
 > ## Install
 >
-> **Cowork users** — download \`scribe-vX.Y.Z.zip\` below and follow the [Cowork install steps in SETUP.md](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/blob/main/SETUP.md#step-6a--for-cowork-users-recommended-for-non-developers).
+> **Cowork users** — download \`scribe-vX.Y.Z.zip\` below and follow [SETUP-END-USER.md](https://github.com/GiGaSoftwareDevelopment/claude-marketplace/blob/main/SETUP-END-USER.md).
 >
 > **Claude Code users** — \`/plugin marketplace add GiGaSoftwareDevelopment/claude-marketplace\` then \`/plugin install scribe@gigasoftware-marketplace\`."
 > ```
@@ -153,9 +157,9 @@ Tell the user to verify the release appears at `https://github.com/GiGaSoftwareD
 
 ---
 
-## Step 7 — Verify the SETUP.md link resolves
+## Step 7 — Verify the SETUP-END-USER.md link resolves
 
-After the release is published, the URL in SETUP.md needs to actually serve the zip. Have the user open this in a browser:
+After the release is published, the URL in SETUP-END-USER.md needs to actually serve the zip. Have the user open this in a browser:
 
 ```
 https://github.com/GiGaSoftwareDevelopment/claude-marketplace/releases/download/vX.Y.Z/scribe-vX.Y.Z.zip
@@ -167,7 +171,7 @@ It should download immediately. If it 404s, the asset wasn't attached correctly 
 
 ## Step 8 — (Optional) Re-test the install path end-to-end
 
-In a fresh Cowork or Claude Code session, walk through SETUP.md → Step 6a (Cowork) or 6b (Code), download the zip from the link, install it, and run `verify_credentials`. This catches release-time regressions before users hit them.
+In a fresh Cowork or Claude Code session, walk through the relevant setup guide (SETUP-END-USER.md for the Cowork upload path, SETUP-DEV-TEAM.md for the Code marketplace path), install the new build, and run `verify_credentials`. This catches release-time regressions before users hit them.
 
 If anything fails:
 - Fix the issue.

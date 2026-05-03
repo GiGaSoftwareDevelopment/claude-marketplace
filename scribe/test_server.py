@@ -475,7 +475,6 @@ class VerifyCredentialsTests(unittest.TestCase):
         self.assertEqual(statuses["repo_is_git_repo"], "ok")
         self.assertEqual(statuses["origin_configured"], "ok")
         self.assertEqual(statuses["git_identity"], "ok")
-        self.assertEqual(statuses["notes_user_matches_identity"], "ok")
         self.assertEqual(statuses["origin_reachable"], "ok")
         self.assertEqual(statuses["push_access"], "ok")
         self.assertEqual(statuses["notes_user_dir_exists"], "warn")  # not created yet
